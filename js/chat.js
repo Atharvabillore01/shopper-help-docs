@@ -9,11 +9,12 @@ const question = input.value.trim();
       responseBox.style.display = "block";
       contentBox.innerHTML = "🧠 Thinking...";
   try {
-   const response = await fetch("http://localhost:8001/ask", {
+const response = await fetch("https://atharvabillore001-shopper-help-rag.hf.space/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: question })
-  });
+});
+
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
