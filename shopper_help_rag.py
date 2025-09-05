@@ -7,8 +7,7 @@ import asyncio
 from asyncio import Queue
 
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_ollama import ChatOllama
+from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpoint
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_core.callbacks import BaseCallbackHandler
@@ -35,14 +34,18 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:8000", "http://localhost:8000"],
+    allow_origins=[
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+        "https://atharvabillore01.github.io"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # --- Load FAISS vector store ---
-embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+embedding = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 db = FAISS.load_local("faiss_index", embedding, allow_dangerous_deserialization=True)
 
 
@@ -55,11 +58,12 @@ class Question(BaseModel):
 @app.post("/ask")
 async def ask(question: Question):
     handler = StreamHandler()
-    llm = ChatOllama(
-        model="mistral",
-        stream=True,
-        callbacks=[handler],
-        temperature=0.5  # try 0.1–0.3 for more accuracy
+
+    # Replace Ollama with HuggingFaceEndpoint
+    llm = HuggingFaceEndpoint(
+        repo_id="google/flan-t5-small",  # lightweight free model
+        temperature=0.3,
+        max_length=512
     )
 
     # Custom prompt
