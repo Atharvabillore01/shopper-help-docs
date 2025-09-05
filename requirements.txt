@@ -1,7 +1,7 @@
 fastapi
 uvicorn
 langchain
-langchain-community
-langchain-huggingface
-huggingface-hub
 faiss-cpu
+transformers
+sentence-transformers
+torch
