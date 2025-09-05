@@ -1,0 +1,18 @@
+<div id="chatbox">
+  <input id="chat-input" placeholder="Try our AI powered help doc, enter your question here" />
+  <button onclick="askQuestion()">Ask</button>
+  <div id="chat-response"></div>
+</div>
+
+<script>
+async function askQuestion() {
+  const input = document.getElementById("chat-input").value;
+  const response = await fetch("http://localhost:8001/ask", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: input })
+  });
+  const data = await response.json();
+  document.getElementById("chat-response").innerText = data.answer;
+}
+</script>

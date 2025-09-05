@@ -1,0 +1,27 @@
+site_name: Shopper Support
+extra_css:
+  - css/extra.css
+extra_templates:
+  - chat.html
+extra:
+  footer: |
+    <div id="chatbox">
+      <input id="chat-input" placeholder="Ask your question..." />
+      <button onclick="askQuestion()">Ask</button>
+      <div id="chat-response"></div>
+    </div>  
+theme:
+  name: material
+  custom_dir: overrides
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+
+
+extra_javascript:
+  - js/chat.js

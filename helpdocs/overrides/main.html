@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block header %}
+  {{ super() }}
+  <div id="chatbox">
+    <input id="chat-input" placeholder="Try our AI powered support, enter your question here" />
+    <button onclick="askQuestion()">Ask</button>
+<div id="chat-response" >
+      <button onclick="closeChat()" style="
+        position: absolute;
+        top: 4px;
+        right: 8px;
+        border: none;
+       
+        font-size: 12px;
+        font-weight: bold;
+        cursor: pointer;
+      ">&times;</button>
+      <div id="chat-content" style="padding-right: 1.5rem;"></div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    function closeChat() {
+      document.getElementById("chat-response").style.display = "none";
+    }
+  </script>
+{% endblock %}
